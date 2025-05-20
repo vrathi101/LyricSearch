@@ -1,0 +1,8 @@
+index_data/
+__pycache__/
+lyrics/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz

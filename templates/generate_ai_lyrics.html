@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate AI Lyrics - LyricSearch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .description {
+            color: #666;
+            margin: 0 auto 2rem auto;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .result-box {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem auto;
+            min-height: 200px;
+            text-align: left;
+            white-space: pre-wrap;
+            font-family: 'Poppins', sans-serif;
+            border: 2px solid #e0e0e0;
+            width: 100%;
+            max-width: 600px;
+            display: block;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        button {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        button:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        .back-button {
+            background: #95a5a6;
+        }
+
+        .back-button:hover {
+            background: #7f8c8d;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .input-group {
+            width: 100%;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #2ecc71;
+        }
+
+        .input-group input::placeholder {
+            color: #95a5a6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Lyrics Generator</h1>
+        <p class="description">
+            Fill in the details below to generate unique lyrics using our advanced AI model. All fields are optional.
+        </p>
+        
+        <div id="loading-spinner" style="display:none; margin-bottom: 1rem;">
+            <svg width="40" height="40" viewBox="0 0 40 40">
+                <circle cx="20" cy="20" r="18" stroke="#2ecc71" stroke-width="4" fill="none" stroke-linecap="round">
+                    <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" from="0 20 20" to="360 20 20"/>
+                </circle>
+            </svg>
+        </div>
+        
+        <form action="{{ url_for('generate_ai_lyrics') }}" method="post" onsubmit="showLoading()">
+            <div class="input-group">
+                <label for="description">Brief Description:</label>
+                <input type="text" id="description" name="description" 
+                       placeholder="Enter a brief description of what you want...">
+            </div>
+            
+            <div class="input-group">
+                <label for="themes">Theme(s):</label>
+                <input type="text" id="themes" name="themes" 
+                       placeholder="Enter themes (e.g., love, nature, freedom)">
+            </div>
+            
+            <div class="input-group">
+                <label for="tone">Tone/Mood:</label>
+                <input type="text" id="tone" name="tone" 
+                       placeholder="Enter tone or mood (e.g., happy, melancholic, energetic)">
+            </div>
+            
+            <div class="input-group">
+                <label for="genre">Genre:</label>
+                <input type="text" id="genre" name="genre" 
+                       placeholder="Enter genre (e.g., pop, rock, hip-hop)">
+            </div>
+            
+            <div class="button-container">
+                <button type="submit">Generate Lyrics</button>
+                <a href="{{ url_for('home') }}">
+                    <button type="button" class="back-button">Back to Home</button>
+                </a>
+            </div>
+        </form>
+
+        <div class="result-box">
+            {{ message if message else "Generated lyrics will appear here..." }}
+        </div>
+    </div>
+    <script>
+    function showLoading() {
+        document.getElementById('loading-spinner').style.display = 'block';
+    }
+    </script>
+</body>
+</html>
