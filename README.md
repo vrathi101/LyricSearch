@@ -67,4 +67,6 @@ python app.py
 
 3. Choose between:
    - Generating AI lyrics
-   - Analyzing existing lyrics
+   - Submitting your own lyrics
+  
+4. Analyze similarity level of public songs to determine how authentic input song is
